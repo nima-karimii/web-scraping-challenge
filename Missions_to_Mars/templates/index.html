@@ -1,28 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
   <style>
+    /* Style for fitting the pictures */
     img {
         max-width: 100%;
         max-height: 100%;
          }
+    /* Style for Mars Facts Table */
+    tr:nth-child(odd) {
+      background-color: #f3b871;
+      text-align: left;
+    }
 
     tr:nth-child(even) {
-  background-color: #f2f2f2;
-            }
-            th, td {
-  text-align: left;;
-  padding: 10px;
-}
-    tr:nth-child(odd) {
-  background-color: #f1f1df;}
+      background-color: #f1f1df;
+      text-align: left;
+    }
+    th{
+      background-color: #f8a948;
+    }
 
-      table {
-        margin-left: auto;
-        margin-right: auto;
-        width: 100%;
-        height: 50%;
-      }
-     
+    table {
+      margin-left: auto;
+      margin-right: auto;
+      table-layout: fixed;
+      width: 100%;
+      height:300px;
+    }
+    /* hover style for Images */
+    .img:hover{
+      -webkit-transition: all .5s ease-in;
+      -moz-transition: all .5s ease-in;
+      -ms-transition: all .5s ease-in;
+      -o-transition: all .5s ease-in;
+      transition: all .5s ease-in;
+      opacity: 1;
+      transform: scale(1.15);
+      -ms-transform: scale(1.15); /* IE 9 */
+      -webkit-transform: scale(1.15); /* Safari and Chrome */
+    } 
 
     </style>
 
@@ -34,90 +50,68 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 </head>
 
-<body>
-  <div class="container">
-    <div class="jumbotron text-center" style="background-image: url('mission_to_mars.png'); border: 1px solid black">
+<body style="background-color: black;">
+  <div class="container ">
+    <div class="jumbotron text-center" style="background-image: url('https://raw.githubusercontent.com/nima-karimii/web-scraping-challenge/master/Missions_to_Mars/mission_to_mars.png'); border: 1px solid black">
       <h1>Mission to Mars </h1>
       <p><a class="btn btn-primary btn-lg" href="../scrape" role="button">Scrape New Data</a></p>
     </div>
 
-    <div class="container" style="background-color: #eee9e6;">
-      <h2>Latest Mars News</h2>
-      <hr>
-      <h5>{{data.news_date}}</h2>
-      <strong><h3>{{data.news_title}}</h3></strong>
-      <h4>{{data.news_p}}</h3>
+    <!-- Latest news Past -->
+    <div class="container" style="background-color:black">
+      <strong><h2 style="color: blanchedalmond;">Latest Mars News</h2></strong>
+      <img height="100px" src="{{data.news_img}}" class="float-right img">
+      <h5 style="color: rgb(252, 224, 182);">{{data.news_date}}</h2>
+      <strong><h3 style="color: rgb(248, 211, 155);">{{data.news_title}}</h3></strong>
+      <h4 style="color: rgb(250, 189, 96);">{{data.news_p}}</h3>
         <hr>
     </div>
 
-    <div class="container" style="background-color: #eee3dd;">
+    <!-- Mars Image and Fact table  -->
+    <div class="container bg-dark" >
     <div class="row" >
-      <div class="container col-md-12 col-lg-6">
-        <h2>Featured Mars img</h2>
-        <img src="{{data.features_img}}" >
+      <div class="container col-md-6 col-lg-6">
+        <h2 style="color: blanchedalmond;">Featured Mars img</h2>
+        <hr>
+        <div class="img"> <img src="{{data.features_img}}" ></div>
       </div>
 
-      <div class="col-md-12 col-lg-6"  class="text-center">
-        <h4  class="text-center">Mars Facts</h4>
-        <h4 >
+      <div class="col-md-6 col-lg-6 text-center" style="height:100%">
+        <h4  class="text-center" style="color: blanchedalmond;">Mars Facts</h4>
+        <hr >
+        <h4>
         {{data.mars_table|safe}}
         <h4>
       </div>
     </div>
     </div>
 
-  <div class="container" style="background-color: #eedcd3;">
-    <div class="row">
-      <div class="col-md-12 col-lg-12" >
-        <h1 class="text-center">Hemispheres of Mars</h1>
-        <hr>
-      </div>
-    </div>
-
-
-
-    <div class="row">
-      <div class="col-md-6 col-lg-6">
-        <div class="text-center" >
-          <img height=400 src="{{data.hemispheres[0].img_url}}"  alt="...">
-          <div class="text-center">
-            <strong><h3 class="text-center">{{data.hemispheres[0].title}}</h5></strong>
+    <!-- Mars Hemispheres part -->
+  
+  <h2 style="padding-top: 50px; text-align: center; color: blanchedalmond;">Mars Hemispheres</h2>
+  <div class="card-deck">
+      <hr>
+      <div class="col-md-12">
+          <div class="row">
+              {% for i in range(0,4) %}
+              <div class="col-md-6">
+                  <div class="card text-white bg-dark " style="margin: 30px;">
+                      <img class="card-img-top img" src="{{data.hemispheres[i].img_url}}" alt="hemispheres Img " />
+                      <div class="card-body">
+                        <strong><h3 class="card-text text-center" style="color: blanchedalmond;">{{data.hemispheres[i].title}} </h3></strong>
+                      </div>
+                  </div>
+              </div>
+              {% endfor %}
           </div>
-        </div>
       </div>
-      <div class="col-md6 col-lg-6">
-        <div class="text-center">
-          <img height=400px src="{{data.hemispheres[1].img_url}}" >
-          <div class="text-center">
-            <strong><h3 class="text-center">{{data.hemispheres[1].title}}</h5></strong>
-            </div>
-        </div>
-      </div>
-    </div>
 
-
-
-
-    <div class="row">
-      <div class="col-md6 col-lg-6">
-        <div class="text-center">
-          <img height=400px src="{{data.hemispheres[2].img_url}}" >
-          <div class="text-center">
-            <strong><h3 class="text-center">{{data.hemispheres[2].title}}</h5></strong>
-            </div>
-        </div>
-      </div>
-      <div class="col-md6 col-lg-6">
-        <div class="text-center">
-          <img height=400px src="{{data.hemispheres[3].img_url}}" >
-          <div class="text-center">
-            <strong><h3 class="text-center">{{data.hemispheres[3].title}}</h5></strong>
-            </div>
-        </div>
-      </div>
-    </div>
   </div>
-  </div>
+
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  
 </body>
 
 </html>

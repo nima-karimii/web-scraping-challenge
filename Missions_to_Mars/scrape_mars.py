@@ -25,10 +25,13 @@ def scrape_info():
     Dates = soup.find_all('div', class_='list_date')
     titles = soup.find_all('div', class_='content_title')
     paragraphs = soup.find_all('div', class_='article_teaser_body')
+    n_img=soup.find_all('div', class_='list_image')
 
     latest_date=Dates[0].text
     latest_title = titles[1].text
     latest_p = paragraphs[0].text
+    latest_newsimg="https://mars.nasa.gov/"+n_img[0].img["src"]
+
 
     url = 'https://www.jpl.nasa.gov/spaceimages/?search=&category=Mars'
     browser.visit(url)
@@ -51,8 +54,7 @@ def scrape_info():
     tables = pd.read_html(url)
     df=tables[0]
     df.columns=['Descriptions' , 'Info']
-    df=df.set_index('Descriptions')
-    html_table = df.to_html()
+    html_table = df.to_html(index=False)
 
     ########
     url = 'https://astrogeology.usgs.gov/search/results?q=hemisphere+enhanced&k1=target&v1=Mars'
@@ -75,7 +77,6 @@ def scrape_info():
         html = browser.html
         soup = bs(html, 'html.parser')
         image_url=soup.find_all('li')[0].a["href"]
-        # Image_urls.append(image_url)
 
     #Adding them in to a List
         Temp={}
@@ -87,6 +88,7 @@ def scrape_info():
     "news_date":latest_date,
     "news_title":latest_title,
     "news_p":latest_p,
+    "news_img":latest_newsimg,
     "features_img":featured_image_url,
     "mars_table":html_table,
     "hemispheres":hemisphere_image_urls
