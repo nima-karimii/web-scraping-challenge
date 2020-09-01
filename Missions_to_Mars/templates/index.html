@@ -93,17 +93,19 @@
       <hr>
       <div class="col-md-12">
           <div class="row">
-              {% for i in range(0,4) %}
+              {% for d in data.hemispheres %}
               <div class="col-md-6">
                   <div class="card text-white bg-dark " style="margin: 30px;">
-                      <img class="card-img-top img" src="{{data.hemispheres[i].img_url}}" alt="hemispheres Img " />
+                      <img class="card-img-top img" src="{{d.img_url|default('https://raw.githubusercontent.com/nima-karimii/web-scraping-challenge/master/Missions_to_Mars/mission_to_mars.png',true)}}" alt="hemispheres Img " />
                       <div class="card-body">
-                        <strong><h3 class="card-text text-center" style="color: blanchedalmond;">{{data.hemispheres[i].title}} </h3></strong>
+                        <strong><h3 class="card-text text-center" style="color: blanchedalmond;">{{d.title}} </h3></strong>
                       </div>
                   </div>
               </div>
               {% endfor %}
-          </div>
+
+
+                </div>
       </div>
 
   </div>

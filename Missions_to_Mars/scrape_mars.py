@@ -16,7 +16,7 @@ def scrape_info():
 
     url = 'https://mars.nasa.gov/news'
     browser.visit(url)
-    time.sleep(2)
+    time.sleep(5)
 
     # Scrape page into Soup
     html = browser.html
